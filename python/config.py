@@ -76,10 +76,10 @@ depends on how long the LED strip is.
 _max_led_FPS = int(((N_PIXELS * 30e-6) + 50e-6)**-1.0)
 assert FPS <= _max_led_FPS, 'FPS must be <= {}'.format(_max_led_FPS)
 
-MIN_FREQUENCY = 200
+MIN_FREQUENCY = 20
 """Frequencies below this value will be removed during audio processing"""
 
-MAX_FREQUENCY = 12000
+MAX_FREQUENCY = 200
 """Frequencies above this value will be removed during audio processing"""
 
 N_FFT_BINS = 24
