@@ -45,7 +45,7 @@ if DEVICE == 'blinkstick':
 USE_GUI = False
 """Whether or not to display a PyQtGraph GUI plot of visualization"""
 
-DISPLAY_FPS = True
+DISPLAY_FPS = False
 """Whether to display the FPS when running (can reduce performance)"""
 
 N_PIXELS = 142
