@@ -100,7 +100,7 @@ common_mode = dsp.ExpFilter(np.tile(0.01, config.N_PIXELS // 2),
                        alpha_decay=0.99, alpha_rise=0.01)
 p_filt = dsp.ExpFilter(np.tile(1, (3, config.N_PIXELS // 2)),
                        alpha_decay=0.1, alpha_rise=0.99)
-p = np.tile(1.0, (3, config.N_PIXELS // 2))
+p = np.tile(1.0, (3, config.N_PIXELS))
 gain = dsp.ExpFilter(np.tile(0.01, config.N_FFT_BINS),
                      alpha_decay=0.001, alpha_rise=0.99)
 
@@ -206,8 +206,8 @@ def visualize_rainbow(y):
     p[1, g:] = 0.0
     p[2, :b] = 255.0
     p[2, b:] = 0.0
-    p[3, :r] = 255.0
-    p[3, r:] = 0.0
+    # p[3, :r] = 255.0
+    # p[3, r:] = 0.0
 
     # p[0, :g] = 255.0
     # p[0, g:] = 0.0
