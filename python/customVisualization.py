@@ -209,7 +209,8 @@ def visualize_rainbow(y):
     p[1, :] = gaussian_filter1d(p[1, :], sigma=4.0)
     p[2, :] = gaussian_filter1d(p[2, :], sigma=4.0)
     # Set the new pixel value
-    return np.concatenate((p[:, ::-1], p), axis=1)
+    return p
+    # return np.concatenate((p[:, ::-1], p), axis=1)
 
 
 _prev_spectrum = np.tile(0.01, config.N_PIXELS // 2)
