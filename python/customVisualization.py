@@ -207,12 +207,16 @@ def visualize_rainbow(y):
     p[2, :b] = 255.0
     p[2, b:] = 0.0
 
-    p_filt.update(p)
-    p = np.round(p_filt.value)
-    # Apply substantial blur to smooth the edges
-    p[0, :] = gaussian_filter1d(p[0, :], sigma=4.0)
-    p[1, :] = gaussian_filter1d(p[1, :], sigma=4.0)
-    p[2, :] = gaussian_filter1d(p[2, :], sigma=4.0)
+    # p_filt.update(p)
+    # p = np.round(p_filt.value)
+    # # Apply substantial blur to smooth the edges
+    # p[0, :] = gaussian_filter1d(p[0, :], sigma=4.0)
+    # p[1, :] = gaussian_filter1d(p[1, :], sigma=4.0)
+    # p[2, :] = gaussian_filter1d(p[2, :], sigma=4.0)
+    # Scrolling effect window
+    p[:, 1:] = p[:, :-1]
+    p *= 0.98
+    p = gaussian_filter1d(p, sigma=0.2)
     # Set the new pixel value
     return np.concatenate((p[:, ::-1], p), axis=1)
 
