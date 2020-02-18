@@ -251,7 +251,7 @@ def visualize_rainbow2(y):
     #         return np.concatenate((p[:, ::-1], p), axis=1)
 
     # Create new color originating at the center
-    # save this for later
+    # Option No 2
     # p[0, 0] = r
     # p[1, 0] = g
     # p[2, 0] = b
@@ -263,15 +263,23 @@ def visualize_rainbow2(y):
     # p[2, 4] = b+3
     # 
     # 
-    p[0, 0] = r
-    p[1, 0] = r
-    p[2, 0] = r
-    p[0, 1] = b
-    p[1, 2] = b
-    p[2, 3] = b
-    p[0, 4] = g
-    p[1, 5] = g
-    p[2, 6] = g
+    #One of the best option
+    # p[0, 0] = r
+    # p[1, 0] = r
+    # p[2, 0] = r
+    # p[0, 1] = b
+    # p[1, 2] = b
+    # p[2, 3] = b
+    # p[0, 4] = g
+    # p[1, 5] = g
+    # p[2, 6] = g
+
+    p[0, :r] = 255.0
+    p[0, r:] = 0.0
+    p[1, :g] = 255.0
+    p[1, g:] = 0.0
+    p[2, :b] = 255.0
+    p[2, b:] = 0.0
 
     # Update the LED strip
     return np.concatenate((p[:, ::-1], p), axis=1)
