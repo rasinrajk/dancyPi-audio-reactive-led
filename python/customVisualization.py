@@ -189,6 +189,7 @@ def visualize_rainbow(y):
     # Scale by the width of the LED strip
     # y *= float((config.N_PIXELS // 2) - 1)
     y *= float((config.N_PIXELS) - 1)
+    print(y)
     # Map color channels according to energy in the different freq bands
     scale = 0.9
     r = int(np.mean(y[:len(y) // 3]**scale))
