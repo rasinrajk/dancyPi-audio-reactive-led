@@ -192,7 +192,8 @@ def visualize_rainbow(y):
     print(y)
     # Map color channels according to energy in the different freq bands
     scale = 0.9
-    r = int(np.mean(y[:len(y) // 3]**scale))
+    # r = int(np.mean(y[:len(y) // 3]**scale))
+    r=0
     g = int(np.mean(y[len(y) // 3: 2 * len(y) // 3]**scale))
     b = int(np.mean(y[2 * len(y) // 3:]**scale))
     # Assign color to different frequency regions
@@ -209,8 +210,7 @@ def visualize_rainbow(y):
     p[1, :] = gaussian_filter1d(p[1, :], sigma=4.0)
     p[2, :] = gaussian_filter1d(p[2, :], sigma=4.0)
     # Set the new pixel value
-    return p
-    # return np.concatenate((p[:, ::-1], p), axis=1)
+    return np.concatenate((p[:, ::-1], p), axis=1)
 
 
 _prev_spectrum = np.tile(0.01, config.N_PIXELS // 2)
