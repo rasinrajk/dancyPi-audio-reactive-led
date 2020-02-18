@@ -200,12 +200,12 @@ def visualize_rainbow(y):
     # b=0
 
     # Assign color to different frequency regions
-    p[0, :r] = 255.0
-    p[0, r:] = 0.0
+    p[2, :r] = 255.0
+    p[1, r:] = 0.0
     p[1, :g] = 255.0
     p[1, g:] = 0.0
-    p[2, :b] = 255.0
-    p[2, b:] = 0.0
+    p[0, :b] = 255.0
+    p[0, b:] = 0.0
     p_filt.update(p)
     p = np.round(p_filt.value)
     # Apply substantial blur to smooth the edges
