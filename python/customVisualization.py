@@ -223,13 +223,14 @@ def visualize_rainbow(y):
 def visualize_rainbow2(y):
     """Effect that originates in the center and scrolls outwards"""
     global p
-    y = y**10.0
+    y = y**2.0
     gain.update(y)
     y /= gain.value
     y *= 255.0
-    r = int(np.max(y[:len(y) // 3]))
-    g = int(np.max(y[len(y) // 3: 2 * len(y) // 3]))
-    b = int(np.max(y[2 * len(y) // 3:]))
+     scale = 0.9
+    r = int(np.mean(y[:len(y) // 3]**scale))
+    g = int(np.mean(y[len(y) // 3: 2 * len(y) // 3]**scale))
+    b = int(np.mean(y[2 * len(y) // 3:]**scale))
     # Scrolling effect window
     p[:, 1:] = p[:, :-1]
     p *= 0.98
