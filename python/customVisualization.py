@@ -263,15 +263,15 @@ def visualize_rainbow2(y):
     # p[2, 4] = b+3
     # 
     # 
-    p[0, 0] = b
-    p[1, 0] = g
+    p[0, 0] = r
+    p[1, 0] = r
     p[2, 0] = r
     p[0, 1] = b
-    p[1, 2] = b+1
-    p[2, 3] = g
-    p[0, 4] = g+1
-    p[1, 5] = r
-    p[2, 6] = r+1
+    p[1, 2] = b
+    p[2, 3] = b
+    p[0, 4] = g
+    p[1, 5] = g
+    p[2, 6] = g
 
     # Update the LED strip
     return np.concatenate((p[:, ::-1], p), axis=1)
