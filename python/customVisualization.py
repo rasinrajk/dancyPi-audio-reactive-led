@@ -228,9 +228,13 @@ def visualize_rainbow2(y):
     y /= gain.value
     y *= 255.0
     scale = 0.9
-    r = int(np.mean(y[:len(y) // 3]**scale))
-    g = int(np.mean(y[len(y) // 3: 2 * len(y) // 3]**scale))
-    b = int(np.mean(y[2 * len(y) // 3:]**scale))
+    # r = int(np.mean(y[:len(y) // 3]**scale))
+    # g = int(np.mean(y[len(y) // 3: 2 * len(y) // 3]**scale))
+    # b = int(np.mean(y[2 * len(y) // 3:]**scale))
+
+    r = int(np.max(y[:len(y) // 3]))
+    g = int(np.max(y[len(y) // 3: 2 * len(y) // 3]))
+    b = int(np.max(y[2 * len(y) // 3:]))
     # Scrolling effect window
     p[:, 1:] = p[:, :-1]
     p *= 0.98
@@ -253,6 +257,9 @@ def visualize_rainbow2(y):
     p[0, 1] = r+1
     p[1, 1] = g+1
     p[2, 1] = b+1
+    p[0, 2] = r+2
+    p[1, 3] = g+3
+    p[2, 4] = b+3
     # Update the LED strip
     return np.concatenate((p[:, ::-1], p), axis=1)
 
