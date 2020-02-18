@@ -160,6 +160,7 @@ def visualize_energy(y):
 _prev_spectrum = np.tile(0.01, config.N_PIXELS // 2)
 
 
+
 def visualize_spectrum(y):
     """Effect that maps the Mel filterbank frequencies onto the LED strip"""
     global _prev_spectrum
@@ -179,22 +180,49 @@ def visualize_spectrum(y):
     return output
 
 def visualize_rainbow(y):
-    """Effect that maps the Mel filterbank frequencies onto the LED strip"""
-    global _prev_spectrum
-    y = np.copy(interpolate(y, config.N_PIXELS // 2))
-    common_mode.update(y)
-    diff = y - _prev_spectrum
-    _prev_spectrum = np.copy(y)
-    # Color channel mappings
-    r = r_filt.update(y - common_mode.value)
-    g = np.abs(diff)
-    b = b_filt.update(np.copy(y))
-    # Mirror the color channels for symmetric output
-    r = np.concatenate((r[::-1], r))
-    g = np.concatenate((g[::-1], g))
-    b = np.concatenate((b[::-1], b))
-    output = np.array([r, g,b]) * 255
-    return output
+    """Effect that expands from the center with increasing sound energy"""
+    print(y)
+    global p
+    y = np.copy(y)
+    gain.update(y)
+    y /= gain.value
+    # Scale by the width of the LED strip
+    # y *= float((config.N_PIXELS // 2) - 1)
+    y *= float((config.N_PIXELS) - 1)
+    # Map color channels according to energy in the different freq bands
+    scale = 0.9
+    r = int(np.mean(y[:len(y) // 3]**scale))
+    g = int(np.mean(y[len(y) // 3: 2 * len(y) // 3]**scale))
+    b = int(np.mean(y[2 * len(y) // 3:]**scale))
+    # Assign color to different frequency regions
+    p[0, :r] = 255.0
+    p[0, r:] = 0.0
+    p[1, :g] = 255.0
+    p[1, g:] = 0.0
+    p[2, :b] = 255.0
+    p[2, b:] = 0.0
+    p_filt.update(p)
+    p = np.round(p_filt.value)
+    # Apply substantial blur to smooth the edges
+    p[0, :] = gaussian_filter1d(p[0, :], sigma=4.0)
+    p[1, :] = gaussian_filter1d(p[1, :], sigma=4.0)
+    p[2, :] = gaussian_filter1d(p[2, :], sigma=4.0)
+    # Set the new pixel value
+    return np.concatenate((p[:, ::-1], p), axis=1)
+
+
+_prev_spectrum = np.tile(0.01, config.N_PIXELS // 2)
+
+def wheel(pos):
+    """Generate rainbow colors across 0-255 positions."""
+    if pos < 85:
+        return Color(pos * 3, 255 - pos * 3, 0)
+    elif pos < 170:
+        pos -= 85
+        return Color(255 - pos * 3, 0, pos * 3)
+    else:
+        pos -= 170
+        return Color(0, pos * 3, 255 - pos * 3)
 
 
 fft_plot_filter = dsp.ExpFilter(np.tile(1e-1, config.N_FFT_BINS),
