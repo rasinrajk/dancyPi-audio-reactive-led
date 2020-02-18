@@ -232,9 +232,9 @@ def visualize_rainbow2(y):
     # g = int(np.mean(y[len(y) // 3: 2 * len(y) // 3]**scale))
     # b = int(np.mean(y[2 * len(y) // 3:]**scale))
 
-    r = int(np.max(y[:len(y) // 3]))
-    g = int(np.max(y[len(y) // 3: 2 * len(y) // 3]))
-    b = int(np.max(y[2 * len(y) // 3:]))
+    r = int(np.max(y[:len(y) // 4]))
+    g = int(np.max(y[len(y) // 4: 2 * len(y) // 4]))
+    b = int(np.max(y[2 * len(y) // 4:]))
     # Scrolling effect window
     p[:, 1:] = p[:, :-1]
     p *= 0.98
