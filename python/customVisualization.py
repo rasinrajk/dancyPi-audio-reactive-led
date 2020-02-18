@@ -236,21 +236,21 @@ def visualize_rainbow2(y):
     p = gaussian_filter1d(p, sigma=0.2)
 
 
-    for j in range(len(y)):
-        for i in range(len(y)):
-            # strip.setPixelColor(i, wheel((i+j) & 255))
-            whellcol = wheel(i+j)
-            p[0, 0] = whellcol[0]
-            p[1, 0] = whellcol[1]
-            p[2, 0] = whellcol[2]
-            return np.concatenate((p[:, ::-1], p), axis=1)
+    # for j in range(len(y)):
+    #     for i in range(len(y)):
+    #         # strip.setPixelColor(i, wheel((i+j) & 255))
+    #         whellcol = wheel(i+j)
+    #         p[0, 0] = whellcol[0]
+    #         p[1, 0] = whellcol[1]
+    #         p[2, 0] = whellcol[2]
+    #         return np.concatenate((p[:, ::-1], p), axis=1)
 
     # Create new color originating at the center
-    # p[0, 0] = r
-    # p[1, 0] = g
-    # p[2, 0] = b
+    p[0, 0] = r
+    p[1, 0] = g
+    p[2, 0] = b
     # Update the LED strip
-    # return np.concatenate((p[:, ::-1], p), axis=1)
+    return np.concatenate((p[:, ::-1], p), axis=1)
 
 
 _prev_spectrum = np.tile(0.01, config.N_PIXELS // 2)
