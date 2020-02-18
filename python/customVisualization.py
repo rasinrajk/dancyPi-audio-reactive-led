@@ -223,7 +223,7 @@ def visualize_rainbow(y):
 def visualize_rainbow2(y):
     """Effect that originates in the center and scrolls outwards"""
     global p
-    y = y**3.0
+    y = y**5.0
     gain.update(y)
     y /= gain.value
     y *= 255.0
