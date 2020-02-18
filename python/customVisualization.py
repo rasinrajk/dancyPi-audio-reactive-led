@@ -196,7 +196,9 @@ def visualize_rainbow(y):
     r=0
     # g = int(np.mean(y[len(y) // 3: 2 * len(y) // 3]**scale))
     g=0
-    b = int(np.mean(y[2 * len(y) // 3:]**scale))
+    # b = int(np.mean(y[2 * len(y) // 3:]**scale))
+    b=0
+    
     # Assign color to different frequency regions
     p[0, :r] = 255.0
     p[0, r:] = 0.0
