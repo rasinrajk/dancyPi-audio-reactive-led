@@ -240,9 +240,9 @@ def visualize_rainbow2(y):
         for i in range(len(y)):
             # strip.setPixelColor(i, wheel((i+j) & 255))
             whellcol = wheel(i+j)
-            p[0, 0] = whellcol.r
-            p[1, 0] = whellcol.b
-            p[2, 0] = whellcol.c
+            p[0, 0] = whellcol[0]
+            p[1, 0] = whellcol[1]
+            p[2, 0] = whellcol[2]
             return np.concatenate((p[:, ::-1], p), axis=1)
 
     # Create new color originating at the center
@@ -258,13 +258,13 @@ _prev_spectrum = np.tile(0.01, config.N_PIXELS // 2)
 def wheel(pos):
     """Generate rainbow colors across 0-255 positions."""
     if pos < 85:
-        return {r: pos * 3, g: 255 - pos * 3,b: 0}
+        return [pos * 3, 255 - pos * 3, 0]
     elif pos < 170:
         pos -= 85
-        return {r: pos * 3, g: 255 - pos * 3,b: 0}
+        return [255 - pos * 3, 0, pos * 3]
     else:
         pos -= 170
-        return {r: pos * 3, g: 255 - pos * 3,b: 0}
+        return [0, pos * 3, 255 - pos * 3]
 
 
 fft_plot_filter = dsp.ExpFilter(np.tile(1e-1, config.N_FFT_BINS),
