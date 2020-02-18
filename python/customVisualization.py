@@ -206,15 +206,7 @@ def visualize_rainbow(y):
     p[1, g:] = 0.0
     p[2, :b] = 255.0
     p[2, b:] = 0.0
-    # p[3, :r] = 255.0
-    # p[3, r:] = 0.0
 
-    # p[0, :g] = 255.0
-    # p[0, g:] = 0.0
-    # p[1, :b] = 255.0
-    # p[1, b:] = 0.0
-    # p[2, :r] = 255.0
-    # p[2, r:] = 0.0
     p_filt.update(p)
     p = np.round(p_filt.value)
     # Apply substantial blur to smooth the edges
@@ -222,6 +214,27 @@ def visualize_rainbow(y):
     p[1, :] = gaussian_filter1d(p[1, :], sigma=4.0)
     p[2, :] = gaussian_filter1d(p[2, :], sigma=4.0)
     # Set the new pixel value
+    return np.concatenate((p[:, ::-1], p), axis=1)
+
+def visualize_rainbow2(y):
+    """Effect that originates in the center and scrolls outwards"""
+    global p
+    y = y**2.0
+    gain.update(y)
+    y /= gain.value
+    y *= 255.0
+    r = int(np.max(y[:len(y) // 3]))
+    g = int(np.max(y[len(y) // 3: 2 * len(y) // 3]))
+    b = int(np.max(y[2 * len(y) // 3:]))
+    # Scrolling effect window
+    p[:, 1:] = p[:, :-1]
+    p *= 0.98
+    p = gaussian_filter1d(p, sigma=0.2)
+    # Create new color originating at the center
+    p[0, 0] = r
+    p[1, 0] = g
+    p[2, 0] = b
+    # Update the LED strip
     return np.concatenate((p[:, ::-1], p), axis=1)
 
 
@@ -321,6 +334,8 @@ elif  sys.argv[1] == "scroll":
         visType = visualize_scroll
 elif  sys.argv[1] == "rainbow":
         visType = visualize_rainbow
+elif  sys.argv[1] == "rainbow2":
+        visType = visualize_rainbow2        
 else:
         visType = visualize_spectrum
 
