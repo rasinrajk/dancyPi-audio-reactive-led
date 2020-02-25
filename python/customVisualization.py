@@ -276,8 +276,8 @@ def visualize_rainbow2(y):
 
     #test 2
     p[0, 0] = r
-    p[1, 0] = r
-    p[2, 0] = r
+    p[1, 0] = g
+    p[2, 0] = b
     # p[0, 1] = b
     # p[1, 1] = b
     # p[2, 1] = b
