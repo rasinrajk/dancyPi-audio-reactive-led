@@ -308,14 +308,9 @@ def visualize_rainbow3(y):
     g = int(np.mean(y[len(y) // 3: 2 * len(y) // 3]**scale))
     b = int(np.mean(y[2 * len(y) // 3:]**scale))
     # Assign color to different frequency regions
-    p[0, :r] = 255.0
-    p[0, r:] = 0.0
-    p[1, :g] = 255.0
-    p[1, g:] = 0.0
-    p[2, :b] = 255.0
-    p[2, b:] = 0.0
-    p_filt.update(p)
-    p = np.round(p_filt.value)
+     p[:, 1:] = p[:, :-1]
+    p *= 0.98
+    p = gaussian_filter1d(p, sigma=0.2)
     # Apply substantial blur to smooth the edges
     p[0, :] = gaussian_filter1d(p[0, :], sigma=4.0)
     p[1, :] = gaussian_filter1d(p[1, :], sigma=4.0)
