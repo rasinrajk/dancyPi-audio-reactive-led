@@ -294,6 +294,34 @@ def visualize_rainbow2(y):
 
     # Update the LED strip
     return np.concatenate((p[:, ::-1], p), axis=1)
+def visualize_rainbow3(y):
+    """Effect that expands from the center with increasing sound energy"""
+    global p
+    y = np.copy(y)
+    gain.update(y)
+    y /= gain.value
+    # Scale by the width of the LED strip
+    y *= float((config.N_PIXELS // 2) - 1)
+    # Map color channels according to energy in the different freq bands
+    scale = 0.9
+    r = int(np.mean(y[:len(y) // 3]**scale))
+    g = int(np.mean(y[len(y) // 3: 2 * len(y) // 3]**scale))
+    b = int(np.mean(y[2 * len(y) // 3:]**scale))
+    # Assign color to different frequency regions
+    p[0, :r] = 255.0
+    p[0, r:] = 0.0
+    p[1, :g] = 255.0
+    p[1, g:] = 0.0
+    p[2, :b] = 255.0
+    p[2, b:] = 0.0
+    p_filt.update(p)
+    p = np.round(p_filt.value)
+    # Apply substantial blur to smooth the edges
+    p[0, :] = gaussian_filter1d(p[0, :], sigma=4.0)
+    p[1, :] = gaussian_filter1d(p[1, :], sigma=4.0)
+    p[2, :] = gaussian_filter1d(p[2, :], sigma=4.0)
+    # Set the new pixel value
+    return np.concatenate((p[:, ::-1], p), axis=1)
 
 
 _prev_spectrum = np.tile(0.01, config.N_PIXELS // 2)
@@ -383,7 +411,9 @@ elif  sys.argv[1] == "scroll":
 elif  sys.argv[1] == "rainbow":
         visType = visualize_rainbow
 elif  sys.argv[1] == "rainbow2":
-        visType = visualize_rainbow2        
+        visType = visualize_rainbow2     
+elif  sys.argv[1] == "rainbow3":
+        visType = visualize_rainbow3   
 else:
         visType = visualize_spectrum
 
