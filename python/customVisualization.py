@@ -321,8 +321,8 @@ def visualize_rainbow3(y):
     p[1, g:] = 0.0
     p[2, :b] = 255.0
     p[2, b:] = 0.0
-    p_filt.update(p)
-    p = np.round(p_filt.value)
+    # p_filt.update(p)
+    # p = np.round(p_filt.value)
     # Apply substantial blur to smooth the edges
     p[0, :] = gaussian_filter1d(p[0, :], sigma=4.0)
     p[1, :] = gaussian_filter1d(p[1, :], sigma=4.0)
