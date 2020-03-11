@@ -37,4 +37,4 @@ if __name__ == '__main__':
     # Intialize the library (must be called once before other functions).
     strip.begin()
 
-    colorWipe(strip, Color(255,255,255), 10)
+    colorWipe(strip, Color(0,0,255), 10)
